@@ -7,8 +7,8 @@ export default function Navbar() {
         <span className="font-bold ml-2">ShelfMaster</span>
       </div>
       <Link to={"/books"}>Books</Link>
-      <Link to={"/books"}>Add Book</Link>
-      <Link to={"/books"}>Borrow Summary</Link>
+      <Link to={"/create-book"}>Add Book</Link>
+      <Link to={"/borrow-summary"}>Borrow Summary</Link>
     </nav>
   );
 }
