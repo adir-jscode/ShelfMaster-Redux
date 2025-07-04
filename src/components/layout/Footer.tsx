@@ -1,5 +1,3 @@
-// components/Footer.tsx
-
 export default function Footer() {
   return (
     <footer className="w-full py-6 border-t bg-background">
@@ -9,14 +7,6 @@ export default function Footer() {
           with React, Redux Toolkit, and shadcn/ui.
         </p>
         <div className="flex gap-4">
-          <a
-            href="https://github.com/your-repo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-4"
-          >
-            GitHub
-          </a>
           <a href="/books" className="underline underline-offset-4">
             All Books
           </a>
