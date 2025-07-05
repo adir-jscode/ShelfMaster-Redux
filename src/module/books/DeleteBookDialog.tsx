@@ -1,4 +1,3 @@
-// module/books/DeleteBookDialog.tsx
 import {
   Dialog,
   DialogContent,

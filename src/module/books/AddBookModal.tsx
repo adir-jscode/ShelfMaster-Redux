@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
+import { showErrorAlert, showSuccessAlert } from "@/utils/alert";
 import { useState } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
-// Optional: Spinner component for loading state
 function Spinner({ size = 20 }: { size?: number }) {
   return (
     <svg
@@ -60,16 +60,18 @@ const AddBookModal = () => {
     },
   });
 
-  const [createBook, { isLoading, isSuccess }] = useCreateBookMutation();
-  if (isSuccess && open) {
-    setTimeout(() => {
-      setOpen(false);
-      form.reset();
-    }, 500);
-  }
+  const [createBook, { isLoading }] = useCreateBookMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    await createBook(data);
+    const res = await createBook(data);
+    if (res.error) {
+      showErrorAlert("Book is not added");
+    } else {
+      showSuccessAlert(res.data.message);
+    }
+
+    setOpen(false);
+    form.reset();
   };
 
   return (
@@ -203,12 +205,7 @@ const AddBookModal = () => {
                     : "An error occurred."}
                 </div>
               )} */}
-              {/* Success Message */}
-              {isSuccess && (
-                <div className="text-success text-sm">
-                  Book added successfully!
-                </div>
-              )}
+
               <div className="flex justify-end gap-2 pt-2">
                 <Button type="submit" disabled={isLoading}>
                   {isLoading ? (

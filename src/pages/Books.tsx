@@ -1,15 +1,66 @@
 import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import AddBookModal from "@/module/books/AddBookModal";
-import { useGetBooksQuery } from "@/redux/api/baseApi";
+import DeleteBookDialog from "@/module/books/DeleteBookDialog";
+import EditBookModal, {
+  type EditBookFormValues,
+} from "@/module/books/EditBookModal";
+import {
+  useDeleteBookMutation,
+  useGetBooksQuery,
+  useUpdateBookMutation,
+} from "@/redux/api/baseApi";
 import type { IBook } from "@/types";
+import { showErrorAlert, showSuccessAlert } from "@/utils/alert";
 import { Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 const Books = () => {
   const { data, isLoading } = useGetBooksQuery({});
   const books: IBook[] = data?.data || [];
-  // For edit and delete modals (not implemented here)
-  // const [selectedBook, setSelectedBook] = useState<IBook | null>(null);
+  const [selectedBook, setSelectedBook] = useState<IBook | null>(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteBook] = useDeleteBookMutation();
+  const [updateBook] = useUpdateBookMutation();
+
+  const handleDelete = (book: IBook) => {
+    setDeleteOpen(true);
+    setSelectedBook(book);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (selectedBook) {
+      const res = await deleteBook(selectedBook._id);
+      if (res.error) {
+        showErrorAlert("Failed to Delete");
+      } else {
+        showSuccessAlert(res.data.message);
+      }
+      setDeleteOpen(false);
+      setSelectedBook(null);
+    }
+  };
+
+  const handleEdit = (book: IBook) => {
+    setSelectedBook(book);
+    setEditOpen(true);
+  };
+
+  const handleEditSubmit = async (formData: EditBookFormValues) => {
+    if (!selectedBook) return;
+    const id = selectedBook._id;
+    const updatedBook = { ...selectedBook, ...formData };
+    const res = await updateBook({ id, ...updatedBook });
+
+    if (res.error) {
+      showErrorAlert("Failed to update");
+    } else {
+      showSuccessAlert(res.data.message);
+    }
+    setEditOpen(false);
+    setSelectedBook(null);
+  };
 
   return (
     <>
@@ -92,13 +143,15 @@ const Books = () => {
                   <td className="px-4 py-3 flex justify-center gap-2">
                     <Button
                       variant="ghost"
-                      size="icon" /* onClick={() => handleEdit(book)} */
+                      size="icon"
+                      onClick={() => handleEdit(book)}
                     >
                       <Pencil className="w-4 h-4" />
                     </Button>
                     <Button
                       variant="ghost"
-                      size="icon" /* onClick={() => handleDelete(book)} */
+                      size="icon"
+                      onClick={() => handleDelete(book)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -109,6 +162,18 @@ const Books = () => {
           </tbody>
         </table>
       </div>
+      <EditBookModal
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        book={selectedBook}
+        onSubmit={handleEditSubmit}
+      />
+      <DeleteBookDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        book={selectedBook}
+        onConfirm={handleDeleteConfirm}
+      />
     </>
   );
 };

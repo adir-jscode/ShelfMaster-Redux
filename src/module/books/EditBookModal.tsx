@@ -15,15 +15,24 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
 import type { IBook } from "@/types";
+
+export type EditBookFormValues = {
+  title: string;
+  author: string;
+  genre: string;
+  isbn: string;
+  copies: number;
+  available: boolean;
+};
 
 type EditBookModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   book: IBook | null;
-  onSubmit: (data: FieldValues) => void;
+  onSubmit: (data: EditBookFormValues) => void | Promise<void>;
 };
 
 const EditBookModal = ({
@@ -56,8 +65,8 @@ const EditBookModal = ({
     }
   }, [book, form]);
 
-  const handleSubmit: SubmitHandler<FieldValues> = (data) => {
-    onSubmit({ ...book, ...data });
+  const handleSubmit: SubmitHandler<EditBookFormValues> = (data) => {
+    onSubmit(data);
     onOpenChange(false);
   };
 
