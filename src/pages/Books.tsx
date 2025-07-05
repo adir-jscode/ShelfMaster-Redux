@@ -16,6 +16,7 @@ import type { IBook } from "@/types";
 import { showErrorAlert, showSuccessAlert } from "@/utils/alert";
 import { BookOpen, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Books = () => {
   const { data, isLoading } = useGetBooksQuery({});
@@ -28,6 +29,7 @@ const Books = () => {
   const [borrowBookMutation] = useBorrowBookMutation();
   const [borrowOpen, setBorrowOpen] = useState(false);
   const [borrowBook, setBorrowBook] = useState<IBook | null>(null);
+  const navigate = useNavigate();
 
   const handleBorrow = (book: IBook) => {
     setBorrowBook(book);
@@ -48,6 +50,7 @@ const Books = () => {
     showSuccessAlert(res.message || "Book borrowed successfully!");
     setBorrowOpen(false);
     setBorrowBook(null);
+    navigate("/borrow-summary");
   };
 
   const handleDelete = (book: IBook) => {
