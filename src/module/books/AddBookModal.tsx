@@ -10,12 +10,20 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
 import { showErrorAlert, showSuccessAlert } from "@/utils/alert";
 import { useState } from "react";
@@ -55,14 +63,25 @@ const AddBookModal = () => {
       author: "",
       genre: "",
       isbn: "",
+      description: "",
       copies: 1,
       available: true,
     },
   });
 
+  const GENRE_OPTIONS = [
+    { value: "FICTION", label: "Fiction" },
+    { value: "NON_FICTION", label: "Non-Fiction" },
+    { value: "SCIENCE", label: "Science" },
+    { value: "HISTORY", label: "History" },
+    { value: "BIOGRAPHY", label: "Biography" },
+    { value: "FANTASY", label: "Fantasy" },
+  ];
+
   const [createBook, { isLoading }] = useCreateBookMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
     const res = await createBook(data);
     if (res.error) {
       showErrorAlert("Book is not added");
@@ -129,17 +148,29 @@ const AddBookModal = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Genre</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Genre (e.g. Fiction, History)"
-                        disabled={isLoading}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      disabled={isLoading}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a Genre" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {GENRE_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="isbn"
@@ -158,6 +189,26 @@ const AddBookModal = () => {
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <textarea
+                        {...field}
+                        placeholder="Short description of the book"
+                        className="min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Briefly describe the book (optional).
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <div className="flex flex-col sm:flex-row gap-4">
                 <FormField
                   control={form.control}
