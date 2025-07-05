@@ -1,18 +1,20 @@
 import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import AddBookModal from "@/module/books/AddBookModal";
+import BorrowBookModal from "@/module/books/BorrowBookModal";
 import DeleteBookDialog from "@/module/books/DeleteBookDialog";
 import EditBookModal, {
   type EditBookFormValues,
 } from "@/module/books/EditBookModal";
 import {
+  useBorrowBookMutation,
   useDeleteBookMutation,
   useGetBooksQuery,
   useUpdateBookMutation,
 } from "@/redux/api/baseApi";
 import type { IBook } from "@/types";
 import { showErrorAlert, showSuccessAlert } from "@/utils/alert";
-import { Pencil, Trash2 } from "lucide-react";
+import { BookOpen, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 const Books = () => {
@@ -23,6 +25,30 @@ const Books = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteBook] = useDeleteBookMutation();
   const [updateBook] = useUpdateBookMutation();
+  const [borrowBookMutation] = useBorrowBookMutation();
+  const [borrowOpen, setBorrowOpen] = useState(false);
+  const [borrowBook, setBorrowBook] = useState<IBook | null>(null);
+
+  const handleBorrow = (book: IBook) => {
+    setBorrowBook(book);
+    setBorrowOpen(true);
+  };
+  const handleBorrowSubmit = async (form: {
+    quantity: number;
+    dueDate: string;
+  }) => {
+    if (!borrowBook) return;
+
+    const payload = {
+      book: borrowBook._id,
+      quantity: form.quantity,
+      dueDate: form.dueDate,
+    };
+    const res = await borrowBookMutation(payload).unwrap();
+    showSuccessAlert(res.message || "Book borrowed successfully!");
+    setBorrowOpen(false);
+    setBorrowBook(null);
+  };
 
   const handleDelete = (book: IBook) => {
     setDeleteOpen(true);
@@ -155,6 +181,14 @@ const Books = () => {
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleBorrow(book)}
+                      disabled={book.copies === 0 || book.available === false}
+                    >
+                      <BookOpen className="w-4 h-4" />
+                    </Button>
                   </td>
                 </tr>
               ))
@@ -173,6 +207,12 @@ const Books = () => {
         onOpenChange={setDeleteOpen}
         book={selectedBook}
         onConfirm={handleDeleteConfirm}
+      />
+      <BorrowBookModal
+        open={borrowOpen}
+        onOpenChange={setBorrowOpen}
+        book={borrowBook}
+        onSubmit={handleBorrowSubmit}
       />
     </>
   );
