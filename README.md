@@ -1,69 +1,103 @@
-# React + TypeScript + Vite
+# 📚 ShelfMaster Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, minimalist library management system frontend built with **React**, **Redux Toolkit**, **TypeScript**, and **shadcn/ui**.  
+Inspired by the Singapore Airlines color palette and design system.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Overview
 
-## Expanding the ESLint configuration
+**ShelfMaster** lets you manage books and borrowings with a clean, responsive, and professional UI.  
+No login required—just a seamless experience for book lovers, librarians, and admins.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ✨ Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **Book Management:**
+  - View all books in a table
+  - Add, edit, and delete books via modals
+  - Borrow books with business logic (copies, due date)
+- **Borrow Summary:**
+  - Aggregated view: Book Title, ISBN, Total Borrowed
+- **Responsive Design:**
+  - Mobile, tablet, and desktop ready
+- **Optimistic UI & Toasts:**
+  - Instant feedback for all actions
+- **Type-safe Forms:**
+  - Built with React Hook Form + TypeScript
+- **Accessible:**
+  - Keyboard and screen reader friendly
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **React** (with Vite or CRA)
+- **TypeScript**
+- **Redux Toolkit** + **RTK Query**
+- **shadcn/ui** (Radix UI + Tailwind CSS)
+- **Tailwind CSS** (customized theme)
+- **React Router**
+- **SweetAlert2** (toasts/dialogs)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🚀 Demo
+
+_Live demo: [https://sm-redux.vercel.app/](https://sm-redux.vercel.app/)_
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js (18+ recommended)
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```
+   git clone https://github.com/adir-jscode/ShelfMaster-Redux.git
+   cd ShelMaster-Redux
+   ```
+
+2. **Install dependencies:**
+
+   ```
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Configure API endpoints:**
+
+   - Update the API base URL in `src/redux/api/baseApi.ts` if needed.
+
+4. **Start the development server:**
+
+   ```
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. **Visit:** [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 🖥️ Usage
+
+- **Books Page:**  
+  View, add, edit, delete, and borrow books.
+- **Borrow Summary:**  
+  See total borrowed quantities per book.
+- **Responsive Design:**  
+  Works beautifully on any device.
+
+---
+
+> _For backend setup and API documentation, see the [ShelfMaster Backend Repo](https://github.com/adir-jscode/ShelfMaster-API)._
