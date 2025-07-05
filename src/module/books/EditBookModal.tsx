@@ -18,6 +18,13 @@ import { Button } from "@/components/ui/button";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
 import type { IBook } from "@/types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export type EditBookFormValues = {
   title: string;
@@ -51,6 +58,15 @@ const EditBookModal = ({
       available: true,
     },
   });
+
+  const GENRE_OPTIONS = [
+    { value: "FICTION", label: "Fiction" },
+    { value: "NON_FICTION", label: "Non-Fiction" },
+    { value: "SCIENCE", label: "Science" },
+    { value: "HISTORY", label: "History" },
+    { value: "BIOGRAPHY", label: "Biography" },
+    { value: "FANTASY", label: "Fantasy" },
+  ];
 
   useEffect(() => {
     if (book) {
@@ -113,9 +129,23 @@ const EditBookModal = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Genre</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Genre" />
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Genre" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {GENRE_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

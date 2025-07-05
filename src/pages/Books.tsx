@@ -1,5 +1,6 @@
 import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import AddBookModal from "@/module/books/AddBookModal";
 import BorrowBookModal from "@/module/books/BorrowBookModal";
 import DeleteBookDialog from "@/module/books/DeleteBookDialog";
@@ -92,113 +93,124 @@ const Books = () => {
   };
 
   return (
-    <>
-      <div className="flex justify-end items-center mb-5">
-        <AddBookModal />
-      </div>
-
-      <div className="overflow-x-auto rounded-lg border bg-background shadow">
-        <table className="min-w-full divide-y divide-muted">
-          <thead className="bg-muted/50">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
-                Title
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
-                Author
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
-                Genre
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
-                ISBN
-              </th>
-              <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground">
-                Copies
-              </th>
-              <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground">
-                Availability
-              </th>
-              <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
+    <div className="container mx-auto py-10">
+      <Card className="p-6 shadow-lg">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-primary mb-1">Books</h2>
+            <p className="text-muted-foreground">
+              Manage your library’s collection. Add, edit, delete, or borrow
+              books.
+            </p>
+          </div>
+          <AddBookModal />
+        </div>
+        <div className="overflow-x-auto rounded-lg border bg-background shadow">
+          <table className="min-w-full divide-y divide-muted">
+            <thead className="bg-muted/50">
               <tr>
-                <td colSpan={7}>
-                  <div className="py-10">
-                    <Spinner size={40} />
-                    <p className="mt-2 text-muted-foreground text-sm text-center">
-                      Loading books...
-                    </p>
-                  </div>
-                </td>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
+                  Title
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
+                  Author
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
+                  Genre
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">
+                  ISBN
+                </th>
+                <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground">
+                  Copies
+                </th>
+                <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground">
+                  Availability
+                </th>
+                <th className="px-4 py-3 text-center text-xs font-semibold text-muted-foreground">
+                  Actions
+                </th>
               </tr>
-            ) : books.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={7}
-                  className="px-4 py-6 text-center text-muted-foreground"
-                >
-                  No books found.
-                </td>
-              </tr>
-            ) : (
-              books.map((book) => (
-                <tr
-                  key={book._id}
-                  className="hover:bg-muted/30 transition-colors"
-                >
-                  <td className="px-4 py-3">{book.title}</td>
-                  <td className="px-4 py-3">{book.author}</td>
-                  <td className="px-4 py-3">{book.genre}</td>
-                  <td className="px-4 py-3">{book.isbn}</td>
-                  <td className="px-4 py-3 text-center">{book.copies}</td>
-                  <td className="px-4 py-3 text-center">
-                    <span
-                      className={`inline-block px-2 py-1 rounded text-xs font-medium ${
-                        book.copies === 0 || book.available === false
-                          ? "bg-destructive/20 text-destructive"
-                          : "bg-success/20 text-success"
-                      }`}
-                    >
-                      {book.copies === 0 || book.available === false
-                        ? "Unavailable"
-                        : "Available"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 flex justify-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleEdit(book)}
-                    >
-                      <Pencil className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDelete(book)}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleBorrow(book)}
-                      disabled={book.copies === 0 || book.available === false}
-                    >
-                      <BookOpen className="w-4 h-4" />
-                    </Button>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={7}>
+                    <div className="py-10">
+                      <Spinner size={40} />
+                      <p className="mt-2 text-muted-foreground text-sm text-center">
+                        Loading books...
+                      </p>
+                    </div>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ) : books.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="px-4 py-6 text-center text-muted-foreground"
+                  >
+                    No books found.
+                  </td>
+                </tr>
+              ) : (
+                books.map((book) => (
+                  <tr
+                    key={book._id}
+                    className="hover:bg-muted/30 transition-colors"
+                  >
+                    <td className="px-4 py-3">{book.title}</td>
+                    <td className="px-4 py-3">{book.author}</td>
+                    <td className="px-4 py-3">{book.genre}</td>
+                    <td className="px-4 py-3">{book.isbn}</td>
+                    <td className="px-4 py-3 text-center">{book.copies}</td>
+                    <td className="px-4 py-3 text-center">
+                      <span
+                        className={`inline-block px-2 py-1 rounded text-xs font-medium ${
+                          book.copies === 0 || book.available === false
+                            ? "bg-destructive/20 text-destructive"
+                            : "bg-success/20 text-success"
+                        }`}
+                      >
+                        {book.copies === 0 || book.available === false
+                          ? "Unavailable"
+                          : "Available"}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 flex justify-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleEdit(book)}
+                        title="Edit"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleDelete(book)}
+                        title="Delete"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleBorrow(book)}
+                        disabled={book.copies === 0 || book.available === false}
+                        title="Borrow"
+                      >
+                        <BookOpen className="w-4 h-4" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
       <EditBookModal
         open={editOpen}
         onOpenChange={setEditOpen}
@@ -217,7 +229,7 @@ const Books = () => {
         book={borrowBook}
         onSubmit={handleBorrowSubmit}
       />
-    </>
+    </div>
   );
 };
 

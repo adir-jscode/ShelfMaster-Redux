@@ -1,74 +1,90 @@
 // src/pages/Home.tsx
 
+import CategorySection from "@/components/Categories";
+import LatestBooksCarousel from "@/components/LatestBooksCarousel";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+// import { Link } from "react-router";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col justify-center items-center py-16 px-4 bg-gradient-to-br from-primary/10 to-background">
-        <div className="max-w-2xl w-full text-center">
-          <div className="flex justify-center mb-6">
-            <img
-              src="/library-hero.svg"
-              alt="Library Illustration"
-              className="w-32 h-32 object-contain"
-              loading="lazy"
-            />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-primary mb-4">
-            Minimal Library Management System
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-8">
-            Effortlessly manage your library’s books and borrowing — clean,
-            fast, and fully responsive. No login required.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/books">
-              <Button size="lg" className="w-full sm:w-auto">
-                📚 View All Books
-              </Button>
-            </Link>
-            <Link to="/create-book">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                ➕ Add New Book
-              </Button>
-            </Link>
-            <Link to="/borrow-summary">
-              <Button variant="ghost" size="lg" className="w-full sm:w-auto">
-                📊 Borrow Summary
-              </Button>
-            </Link>
+
+      <section
+        className="relative w-full min-h-[420px] md:min-h-[500px] flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Overlay for contrast */}
+        <div className="absolute inset-0 bg-black/40" />
+        {/* Content */}
+        <div className="relative z-10 flex flex-col md:flex-row items-center w-full max-w-6xl mx-auto px-6 py-10 md:py-0">
+          {/* Book Cover */}
+          <div className="flex-shrink-0 mb-8 md:mb-0 md:mr-12"></div>
+          {/* Headline & CTA */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="text-base font-semibold text-[#f3d6a5] mb-2 tracking-wide">
+              Sunlight Publishing
+            </div>
+            <h1 className="text-3xl md:text-5xl font-extrabold mb-4 text-white drop-shadow">
+              Introducing “Among the Pines”
+            </h1>
+            <div className="text-lg text-white/90 mb-6 font-medium drop-shadow">
+              A heartfelt journey of courage, friendship, and new beginnings by
+              Riley Monroe.
+            </div>
+            <Button
+              asChild
+              size="lg"
+              className="bg-white/90 hover:bg-[#f3d6a5] text-[#2d2d2d] font-semibold px-8 py-3 rounded shadow transition"
+            >
+              <a href="/books/among-the-pines">READ MORE</a>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-12 bg-background">
-        <div className="container mx-auto max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="rounded-xl border p-6 shadow-sm text-center">
-            <div className="text-3xl mb-2">🛠️</div>
-            <h3 className="font-semibold text-lg mb-1">Book Management</h3>
-            <p className="text-muted-foreground text-sm">
-              Add, edit, delete, and manage your library’s collection with ease.
-            </p>
+      <CategorySection></CategorySection>
+      <LatestBooksCarousel></LatestBooksCarousel>
+      <section className="flex flex-col md:flex-row items-center justify-center px-6 py-16 bg-[#f6e9dc]">
+        {/* Book Cover */}
+        <div className="flex-shrink-0 mb-8 md:mb-0 md:mr-12">
+          <img
+            src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80"
+            alt="Featured Book: The Art of Quiet Mornings"
+            className="w-64 h-96 object-cover rounded-lg shadow-lg border"
+          />
+        </div>
+        {/* Book Info */}
+        <div className="max-w-xl">
+          <div className="text-lg font-semibold text-[#c97c33] mb-2">
+            Emma L. Carter
           </div>
-          <div className="rounded-xl border p-6 shadow-sm text-center">
-            <div className="text-3xl mb-2">🚀</div>
-            <h3 className="font-semibold text-lg mb-1">Instant Borrowing</h3>
-            <p className="text-muted-foreground text-sm">
-              Borrow books, track availability, and view summaries—all in real
-              time.
-            </p>
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-3 text-[#2d2d2d]">
+            The Art of Quiet Mornings
+          </h2>
+          <div className="italic text-[#6c5c4c] mb-4">
+            Embracing Stillness in a Busy World
           </div>
-          <div className="rounded-xl border p-6 shadow-sm text-center">
-            <div className="text-3xl mb-2">📱</div>
-            <h3 className="font-semibold text-lg mb-1">Responsive & Minimal</h3>
-            <p className="text-muted-foreground text-sm">
-              Clean, modern UI that works beautifully on any device.
-            </p>
+          <p className="text-base text-[#6c5c4c] mb-6 leading-relaxed">
+            Discover how peaceful mornings can transform your day. This
+            inspiring book offers gentle routines, mindful reflections, and
+            practical tips to help you start each morning with clarity and calm.
+          </p>
+          <div className="mb-6 text-lg">
+            Price: <span className="text-[#c97c33] font-bold">$11.99</span>
           </div>
+          <Button
+            asChild
+            size="lg"
+            className="bg-[#2d2d2d] hover:bg-[#c97c33] text-white font-semibold px-8 py-3 rounded shadow"
+          >
+            <a href="/">READ MORE</a>
+          </Button>
         </div>
       </section>
     </div>

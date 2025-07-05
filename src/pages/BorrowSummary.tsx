@@ -14,7 +14,6 @@ const BorrowSummary = () => {
     { refetchOnFocus: true, refetchOnMountOrArgChange: true }
   );
 
-  // Safely map API response to the format needed for the table
   const summary: BorrowSummaryItem[] =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?.data?.map((item: any) => ({
