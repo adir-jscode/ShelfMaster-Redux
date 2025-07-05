@@ -42,7 +42,7 @@ export default function Home() {
               size="lg"
               className="bg-white/90 hover:bg-[#f3d6a5] text-[#2d2d2d] font-semibold px-8 py-3 rounded shadow transition"
             >
-              <a href="/books/among-the-pines">READ MORE</a>
+              <a href="/books">Browse All Books</a>
             </Button>
           </div>
         </div>
@@ -75,9 +75,7 @@ export default function Home() {
             inspiring book offers gentle routines, mindful reflections, and
             practical tips to help you start each morning with clarity and calm.
           </p>
-          <div className="mb-6 text-lg">
-            Price: <span className="text-[#c97c33] font-bold">$11.99</span>
-          </div>
+
           <Button
             asChild
             size="lg"

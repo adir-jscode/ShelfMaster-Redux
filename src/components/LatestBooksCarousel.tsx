@@ -2,15 +2,13 @@ import { Card } from "@/components/ui/card";
 import { useGetBooksQuery } from "@/redux/api/baseApi";
 import Spinner from "@/components/Spinner";
 
-// Professional blank book cover from Pixabay (copyright-free)
 const DEFAULT_BOOK_IMAGE =
-  "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80";
+  "https://images4.penguinrandomhouse.com/cover/9780593491973";
 
 export default function LatestBooksGrid() {
   const { data, isLoading, isError } = useGetBooksQuery({});
   const books = data?.data || [];
 
-  // Sort by latest (optional)
   const latestBooks = [...books].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
