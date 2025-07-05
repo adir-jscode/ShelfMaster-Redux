@@ -1,9 +1,6 @@
 # 📚 ShelfMaster Frontend
 
-A modern, minimalist library management system frontend built with **React**, **Redux Toolkit**, **TypeScript**, and **shadcn/ui**.  
-Inspired by the Singapore Airlines color palette and design system.
-
----
+## A modern, minimalist library management system frontend built with **React**, **Redux Toolkit**, **TypeScript**, and **shadcn/ui**.
 
 ## 🌟 Overview
 
