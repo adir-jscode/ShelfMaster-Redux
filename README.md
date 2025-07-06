@@ -30,19 +30,19 @@ No login required—just a seamless experience for book lovers, librarians, and 
 
 ## 🛠️ Tech Stack
 
-- **React** (with Vite or CRA)
+- **React** (with Vite)
 - **TypeScript**
 - **Redux Toolkit** + **RTK Query**
-- **shadcn/ui** (Radix UI + Tailwind CSS)
-- **Tailwind CSS** (customized theme)
+- **shadcn/ui**
+- **Tailwind CSS**
 - **React Router**
-- **SweetAlert2** (toasts/dialogs)
+- **SweetAlert2**
 
 ---
 
 ## 🚀 Demo
 
-_Live demo: [https://sm-redux.vercel.app/](https://sm-redux.vercel.app/)_
+_Live demo: [https://shelfmaster-redux.vercel.app/](https://shelfmaster-redux.vercel.app/)_
 
 ---
 
