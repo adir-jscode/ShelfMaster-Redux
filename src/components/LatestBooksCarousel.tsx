@@ -15,7 +15,7 @@ export default function LatestBooksGrid() {
 
   return (
     <section className="py-12 bg-[#faf9f6]">
-      <h2 className="text-3xl font-extrabold mb-10 text-center text-primary tracking-tight">
+      <h2 className="text-3xl font-extrabold mb-10 text-center text-black tracking-tight">
         Latest Books
       </h2>
       {isLoading ? (
